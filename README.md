@@ -36,10 +36,11 @@
 
   ![Preview](./sources/preview_video_compressed.gif)
 
-</div>
+  _Users could reproduce the preview simulation using examples of the `worvai.nodes.latency_nodes`!_
 
-_Users could reproduce the preview simulation using examples of the `worvai.nodes.latency_nodes`!_
-_Welcome for diverse and refined examples contributing to the community!_
+  _Welcome for diverse and refined examples contributing to the community!_
+
+</div>
 
 ## Overview
 
