@@ -31,7 +31,12 @@
 
 ## Preview
 
-<img src="./sources/preview_video_compressed.gif" align="center">
+
+<div align="center">
+
+![Preview](./sources/preview_video_compressed.gif)
+
+</div>
 
 _Users could reproduce the preview simulation using examples of the `worvai.nodes.latency_nodes`!_
 _Welcome for diverse and refined examples contributing to the community!_
