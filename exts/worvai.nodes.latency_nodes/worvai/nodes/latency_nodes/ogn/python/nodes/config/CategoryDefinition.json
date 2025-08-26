@@ -1,0 +1,9 @@
+{
+    "categoryDefinitions": {
+        "$description": [
+            "Categories applied to nodes in this extension.",
+            "Visit https://docs.omniverse.nvidia.com/kit/docs/omni.graph.docs/latest/howto/Categories.html for more details"
+        ],
+        "Latency Nodes": "Set of nodes that introduce latency in the graph execution."
+    }
+}

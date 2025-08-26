@@ -1,0 +1,54 @@
+{
+    "ExampleSpot": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "Example Spot",
+        "description": [
+            "This node is for example purposes of Spot robot.",
+            "It is designed to make preview for latency nodes in Isaac Sim"
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the execution input that starts the node",
+                "uiName": "exec In"
+            },
+            "command": {
+                "type": "vectord[3]",
+                "description": "the trigger input that starts the node",
+                "uiName": "Command"
+
+            }
+        },
+        "state": {
+            "currentCommand": {
+                "type": "vectord[3]",
+                "description": "the current command being executed by the node",
+                "uiName": "Current Command"
+            },
+            "currentPosition": {
+                "type": "vectord[3]",
+                "description": "the current position of the robot",
+                "uiName": "Current Position"
+            },
+            "currentOrientation": {
+                "type": "quatd[4]",
+                "description": "the current orientation of the robot",
+                "uiName": "Current Orientation"
+            },
+            "currentAngularVelocity": {
+                "type": "vectord[3]",
+                "description": "the angular velocity of the robot",
+                "uiName": "Current Angular Velocity"
+            },
+            "currentLinearVelocity": {
+                "type": "vectord[3]",
+                "description": "the linear velocity of the robot",
+                "uiName": "Current Linear Velocity"
+            }
+        }
+    }
+}
