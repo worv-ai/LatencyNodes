@@ -34,7 +34,7 @@
 
 <div align="center">
 
-![Preview](./sources/preview_video_compressed.gif)
+  ![Preview](./sources/preview_video_compressed.gif)
 
 </div>
 
