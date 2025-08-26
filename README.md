@@ -31,9 +31,7 @@
 
 ## Preview
 
-<!-- Consider to add the first view image -->
-
-![Preview](./sources/preview_video_compressed.gif)
+<img src="./sources/preview_video_compressed.gif" align="center">
 
 _Users could reproduce the preview simulation using examples of the `worvai.nodes.latency_nodes`!_
 _Welcome for diverse and refined examples contributing to the community!_
@@ -89,7 +87,7 @@ Users could apply latency to your robotic systems using the provided nodes with 
 ### Method 2: Manual Installation
 1. Clone this repository:
    ```bash
-   git clone https://github.com/WoRV-AI/Latency-Nodes.git
+   git clone https://github.com/worv-ai/LatencyNodes.git
    ```
 
 2. Copy the extension to your Isaac Sim extensions directory:
@@ -145,11 +143,19 @@ We welcome contributions! Please see our contributing guidelines [Contribution G
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache-2.0 License - see the [LICENSE](LICENSE) file for details.
 
 ## Changelog
 
 See [CHANGELOG.md](exts/worvai.nodes.latency_nodes/docs/CHANGELOG.md) for version history and updates.
+
+## Acknowledgements
+
+We would like to express our gratitude to the following:
+
+- **NVIDIA Corporation** for `Isaac Sim` and the `Omniverse` platform that makes this extension possible
+- **Pixar Animation Studios** for the `Universal Scene Description (USD)` framework
+- **OmniGraph** for providing the visual scripting framework that enables our latency simulation nodes
 
 ---
 
