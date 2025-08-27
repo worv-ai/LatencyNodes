@@ -1,4 +1,4 @@
-# Latency-Nodes
+# LatencyNodes
 
 <div align="center">
 
