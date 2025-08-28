@@ -1,0 +1,97 @@
+{
+    "GEVDistributionSampler": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "GEV Distribution Sampler",
+        "description": [
+            "This node samples latencies from a GEV distribution.",
+            "It is designed to pass the sampled latency to the Latency Controller node."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "_shapeParameter": {
+                "type": "double",
+                "description": "the shape parameter of the GEV distribution",
+                "uiName": "Shape Parameter",
+                "metadata": {
+                    "internal": true
+                }
+            },
+            "_locationParameter": {
+                "type": "double",
+                "description": "the location parameter of the GEV distribution",
+                "uiName": "Location Parameter",
+                "metadata": {
+                    "internal": true
+                }
+            },
+            "_scaleParameter": {
+                "type": "double",
+                "description": "the scale parameter of the GEV distribution",
+                "uiName": "Scale Parameter",
+                "metadata": {
+                    "internal": true
+                }
+            },
+            "min": {
+                "type": "double",
+                "description": "the minimum latency sampled by the node",
+                "uiName": "Minimum Latency"
+            },
+            "max": {
+                "type": "double",
+                "description": "the maximum latency sampled by the node",
+                "uiName": "Maximum Latency"
+            },
+            "verbose": {
+                "type": "bool",
+                "description": "enable verbose logging for the node",
+                "uiName": "Verbose Logging",
+                "default": false
+            }
+        },
+
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that signals the node has finished processing",
+                "uiName": "Execute Out"
+            },
+            "latencyOut": {
+                "type": "double",
+                "description": "the latency output that can be used to pass a time value through the node",
+                "uiName": "Latency Out"
+            }
+        },
+
+        "state": {
+            "latencyHistory": {
+                "type": "double[]",
+                "description": "a history of latencies sampled by the node",
+                "uiName": "Latency History"
+            },
+            "latencyCount": {
+                "type": "int",
+                "description": "the number of latencies sampled by the node",
+                "uiName": "Latency Count"
+            },
+            "min": {
+                "type": "double",
+                "description": "the minimum latency sampled by the node",
+                "uiName": "Minimum Latency"
+            },
+            "max": {
+                "type": "double",
+                "description": "the maximum latency sampled by the node",
+                "uiName": "Maximum Latency"
+            }
+        }
+    }
+}

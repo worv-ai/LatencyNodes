@@ -1,0 +1,81 @@
+{
+    "NormalDistributionSampler": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "Normal Distribution Sampler",
+        "description": [
+            "This node samples latencies from a normal distribution.",
+            "It is designed to pass the sampled latency to the Latency Controller node."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "_average": {
+                "type": "double",
+                "description": "the average latency to be sampled by the node",
+                "uiName": "Average Latency",
+                "metadata": {
+                    "internal": true
+                },
+                "default": 0.0
+            },
+            "_standardDeviation": {
+                "type": "double",
+                "description": "the standard deviation of the latencies to be sampled by the node",
+                "uiName": "Standard Deviation",
+                "metadata": {
+                    "internal": true
+                },
+                "default": 0.0
+            },
+            "min": {
+                "type": "double",
+                "description": "the minimum latency sampled by the node",
+                "uiName": "Minimum Latency"
+            },
+            "max": {
+                "type": "double",
+                "description": "the maximum latency sampled by the node",
+                "uiName": "Maximum Latency"
+            },
+            "verbose": {
+                "type": "bool",
+                "description": "enable verbose logging for the node",
+                "uiName": "Verbose Logging",
+                "default": false
+            }
+        },
+
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that signals the node has finished processing",
+                "uiName": "Execute Out"
+            },
+            "latencyOut": {
+                "type": "double",
+                "description": "the latency output that can be used to pass a time value through the node",
+                "uiName": "Latency Out"
+            }
+        },
+
+        "state": {
+            "latencyHistory": {
+                "type": "double[]",
+                "description": "a history of latencies sampled by the node",
+                "uiName": "Latency History"
+            },
+            "latencyCount": {
+                "type": "int",
+                "description": "the number of latencies sampled by the node",
+                "uiName": "Latency Count"
+            }
+        }
+    }
+}

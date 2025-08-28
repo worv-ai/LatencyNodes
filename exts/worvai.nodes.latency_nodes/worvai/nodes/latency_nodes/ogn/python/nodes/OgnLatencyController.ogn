@@ -1,0 +1,55 @@
+{
+    "LatencyController": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "Latency Controller",
+        "description": [
+            "This ndoe is used to control the latency of data passing through it.",
+            "It can be used to introduce a fixed latency or to buffer data and timestamps."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "dataIn": {
+                "type": "any",
+                "description": "the data input that can be used to pass data through the node",
+                "uiName": "Data In"
+            },
+            "timestampIn": {
+                "type": "double",
+                "description": "the timestamp input that can be used to pass a time value through the node",
+                "uiName": "Timestamp In"
+            },
+            "latency": {
+                "type": "double",
+                "description": "a value that sets the latency at the very execution of the node",
+                "default": 0.0,
+                "uiName": "Latency"
+            }
+        },
+
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that ends the node",
+                "uiName": "Execute Out"
+            },
+            "timestampOut": {
+                "type": "double[]",
+                "description": "buffered timestamps output that can be used to pass a time value through the node",
+                "uiName": "Timestamp Buffer"
+            },
+            "dataOut": {
+                "type": "any",
+                "description": "buffered data output that can be used to pass data through the node",
+                "uiName": "Data Buffer"
+            }
+        }
+    }
+}

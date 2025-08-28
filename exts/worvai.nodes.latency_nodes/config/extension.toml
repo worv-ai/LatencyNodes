@@ -1,0 +1,34 @@
+[core]
+reloadable = true
+order = 0
+
+[package]
+version = "0.1.0"
+
+title = "Latency Nodes"
+category = "graph"
+keywords = ["latency", "delay", "node", "ogn", "graph"]
+description = "Latency nodes to use latency functionalities in Isaac Sim."
+readme = "docs/README.md"
+changelog = "docs/CHANGELOG.md"
+
+authors = ["kickthemoon0817", "kickthemoon0817@gmail.com"]
+maintainer = "Sungmin Kim"
+repository = "https://github.com/worv-ai/Latency-Nodes"
+
+icon = "data/icon.png"
+preview_image = "data/preview.png"
+
+
+[dependencies]
+"omni.graph" = {}
+"omni.graph.tools" = {}
+"omni.kit.uiapp" = {}
+
+
+[[python.module]]
+name = "worvai.nodes.latency_nodes"
+
+
+[settings]
+exts."worvai.nodes.latency_nodes".timeout = 5
