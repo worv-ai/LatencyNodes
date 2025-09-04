@@ -3,7 +3,7 @@ reloadable = true
 order = 0
 
 [package]
-version = "0.1.0"
+version = "0.3.0"
 
 title = "Latency Nodes"
 category = "graph"
@@ -14,7 +14,7 @@ changelog = "docs/CHANGELOG.md"
 
 authors = ["kickthemoon0817", "kickthemoon0817@gmail.com"]
 maintainer = "Sungmin Kim"
-repository = "https://github.com/worv-ai/Latency-Nodes"
+repository = "https://github.com/worv-ai/LatencyNodes"
 
 icon = "data/icon.png"
 preview_image = "data/preview.png"
