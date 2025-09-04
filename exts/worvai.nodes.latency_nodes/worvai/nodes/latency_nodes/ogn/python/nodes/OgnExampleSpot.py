@@ -25,9 +25,9 @@ class OgnExampleSpotInternalState:
 
 		self.spot_robot = self.spot.robot
 
-		# self.debug_camera = None
-
-		# self._attach_camera()
+		self.debug_camera = None
+		self.front_camera = None
+		self._attach_camera()
 
 	def post_setup(self):
 		self.world.add_physics_callback(
@@ -47,23 +47,37 @@ class OgnExampleSpotInternalState:
 			self.spot.post_reset()
 			self.spot.robot.set_joints_default_state(self.spot.default_pos)
 	
-			# self.debug_camera.initialize()
+			self.debug_camera.initialize()
 
-	# def _attach_camera(self):
-	# 	if not self.spot_robot or self.debug_camera:
-	# 		return
+	def _attach_camera(self):
+		if not self.spot_robot or self.debug_camera:
+			return
 		
-	# 	self.debug_camera = Camera(
-	# 		prim_path="/World/spot/body/debug_camera",
-	# 		position=np.array([-5, 0, 2.5 + 0.8]),
-	# 	)
+		self.debug_camera = Camera(
+			prim_path="/World/spot/body/debug_camera",
+			position=np.array([-5, 0, 2.5 + 0.8]),
+			resolution=(1280, 720)
+		)
 
-	# 	self.debug_camera.prim.GetAttribute('xformOp:orient').Set(
-	# 		Gf.Quatd(
-	# 			0.6123724356957947, 0.3535533905932736,
-	# 			-0.3535533905932738, -0.6123724356957944
-	# 		)
-	# 	)
+		self.debug_camera.prim.GetAttribute('xformOp:orient').Set(
+			Gf.Quatd(
+				0.6123724356957947, 0.3535533905932736,
+				-0.3535533905932738, -0.6123724356957944
+			)
+		)
+
+		self.front_camera = Camera(
+			prim_path="/World/spot/body/front_camera",
+			position=np.array([-0.48, 0, 0.8]),
+			resolution=(1280, 720)
+		)
+		
+		self.front_camera.prim.GetAttribute('xformOp:orient').Set(
+			Gf.Quatd(
+				0.48633, 0.51481,
+				-0.51326, -0.48479
+			)
+		)
 
 	def release_setup(self):
 		self.initialized = False
@@ -75,7 +89,7 @@ class OgnExampleSpot:
 
 	@staticmethod
 	def initialize(graph_context: og.GraphContext, node: og.Node):
-		spot = SpotFlatTerrainPolicy(
+		SpotFlatTerrainPolicy(
 			prim_path="/World/spot",
 			name="Spot",
 			position=np.array([0, 0, 0.8])
