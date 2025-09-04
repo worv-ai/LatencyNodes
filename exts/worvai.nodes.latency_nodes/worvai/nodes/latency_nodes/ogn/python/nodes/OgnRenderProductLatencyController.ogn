@@ -1,0 +1,80 @@
+{
+    "RenderProductLatencyController": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "Render Product Latency Controller",
+        "description": [
+            "This node controls the latency of render product data passing through it.",
+            "It captures the actual rendered data and applies latency buffering to it."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "renderProductPath": {
+                "type": "token",
+                "description": "path to the render product",
+                "uiName": "Render Product Path"
+            },
+            "dataType": {
+                "type": "token",
+                "description": "type of data to capture (rgb, depth, etc.)",
+                "default": "rgb",
+                "uiName": "Data Type"
+            },
+            "timestampIn": {
+                "type": "double",
+                "description": "the timestamp input that can be used to pass a time value through the node",
+                "uiName": "Timestamp In"
+            },
+            "latency": {
+                "type": "double",
+                "description": "a value that sets the latency at the very execution of the node",
+                "default": 0.0,
+                "uiName": "Latency"
+            }
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that ends the node",
+                "uiName": "Execute Out"
+            },
+            "renderProductPathOut": {
+                "type": "token",
+                "description": "buffered render product path output",
+                "uiName": "Render Product Path Out"
+            },
+            "imageDataOut": {
+                "type": "uchar[]",
+                "description": "buffered image data output",
+                "uiName": "Image Data Out"
+            },
+            "timestampOut": {
+                "type": "double[]",
+                "description": "buffered timestamps output",
+                "uiName": "Timestamp Buffer"
+            },
+            "width": {
+                "type": "int",
+                "description": "image width",
+                "uiName": "Width"
+            },
+            "height": {
+                "type": "int",
+                "description": "image height",
+                "uiName": "Height"
+            },
+            "channels": {
+                "type": "int",
+                "description": "number of channels",
+                "uiName": "Channels"
+            }
+        }
+    }
+}

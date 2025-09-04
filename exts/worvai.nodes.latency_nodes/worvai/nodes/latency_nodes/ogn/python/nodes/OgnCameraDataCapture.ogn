@@ -1,0 +1,88 @@
+{
+    "CameraDataCapture": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "Camera Data Capture",
+        "description": [
+            "This node captures actual rendered camera data (RGB, depth, etc.) from a render product.",
+            "It provides the actual image data instead of just the render product path."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "renderProductPath": {
+                "type": "token",
+                "description": "path to the render product to capture data from",
+                "uiName": "Render Product Path"
+            },
+            "dataType": {
+                "type": "token",
+                "description": "type of data to capture (rgb, depth, etc.)",
+                "default": "rgb",
+                "uiName": "Data Type",
+                "metadata": {
+                    "allowedTokens": {
+                        "rgb": "rgb",
+                        "depth": "depth",
+                        "instance_segmentation": "instance_segmentation",
+                        "semantic_segmentation": "semantic_segmentation",
+                        "normals": "normals"
+                    }
+                }
+            },
+            "timestampIn": {
+                "type": "double",
+                "description": "timestamp for the captured data",
+                "uiName": "Timestamp In"
+            }
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that ends the node",
+                "uiName": "Execute Out"
+            },
+            "imageData": {
+                "type": "uchar[]",
+                "description": "captured image data as byte array",
+                "uiName": "Image Data"
+            },
+            "width": {
+                "type": "int",
+                "description": "image width",
+                "uiName": "Width"
+            },
+            "height": {
+                "type": "int",
+                "description": "image height",
+                "uiName": "Height"
+            },
+            "channels": {
+                "type": "int",
+                "description": "number of channels (3 for RGB, 1 for depth, etc.)",
+                "uiName": "Channels"
+            },
+            "encoding": {
+                "type": "string",
+                "description": "ROS image encoding format (rgba8, rgb8, 32FC1, 32SC1, etc.)",
+                "uiName": "Encoding"
+            },
+            "dataType": {
+                "type": "string",
+                "description": "numpy data type (uint8, float32, uint32, etc.)",
+                "uiName": "Data Type"
+            },
+            "timestampOut": {
+                "type": "double",
+                "description": "timestamp of the captured data",
+                "uiName": "Timestamp Out"
+            }
+        }
+    }
+}

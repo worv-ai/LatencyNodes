@@ -1,0 +1,89 @@
+{
+    "ROS1PublishRenderedImage": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "ROS1 Publish Rendered Image",
+        "description": [
+            "This node publishes image data captured from latency controllers to ROS1.",
+            "It takes raw image data arrays and publishes them as ROS1 Image messages."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "imageData": {
+                "type": "uchar[]",
+                "description": "raw image data as byte array",
+                "uiName": "Image Data"
+            },
+            "width": {
+                "type": "int",
+                "description": "image width",
+                "uiName": "Width"
+            },
+            "height": {
+                "type": "int",
+                "description": "image height",
+                "uiName": "Height"
+            },
+            "channels": {
+                "type": "int",
+                "description": "number of channels (3 for RGB, 1 for depth, etc.)",
+                "uiName": "Channels"
+            },
+            "encoding": {
+                "type": "string",
+                "description": "image encoding (rgb8, bgr8, mono8, etc.)",
+                "default": "rgb8",
+                "uiName": "Encoding"
+            },
+            "frameId": {
+                "type": "string",
+                "description": "frame ID for the image message",
+                "default": "camera_frame",
+                "uiName": "Frame ID"
+            },
+            "topicName": {
+                "type": "string",
+                "description": "ROS topic name to publish to",
+                "default": "image_raw",
+                "uiName": "Topic Name"
+            },
+            "nodeNamespace": {
+                "type": "string",
+                "description": "ROS node namespace",
+                "default": "",
+                "uiName": "Node Namespace"
+            },
+            "queueSize": {
+                "type": "uint",
+                "description": "ROS publisher queue size",
+                "default": 10,
+                "uiName": "Queue Size"
+            },
+            "timestampIn": {
+                "type": "double",
+                "description": "timestamp for the image message",
+                "uiName": "Timestamp In"
+            },
+            "useSystemTime": {
+                "type": "bool",
+                "description": "use system time instead of simulation time",
+                "default": false,
+                "uiName": "Use System Time"
+            }
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that ends the node",
+                "uiName": "Execute Out"
+            }
+        }
+    }
+}
