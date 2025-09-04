@@ -17,7 +17,7 @@
 [![Python](https://img.shields.io/badge/Python-3.10+-3776ab?style=flat&logo=python&logoColor=white)](https://www.python.org/)
 [![Isaac Sim](https://img.shields.io/badge/Isaac%20Sim-4.5.0+-76B900?style=flat&logo=nvidia&logoColor=white)](https://developer.nvidia.com/isaac-sim)
 [![OmniGraph](https://img.shields.io/badge/OmniGraph-Compatible-00D4AA?style=flat&logo=nvidia&logoColor=white)](https://docs.omniverse.nvidia.com/dev-guide/latest/programmer_ref/omni_graph.html)
-[![Extension](https://img.shields.io/badge/ExtVersion-v0.1.1-orange?style=flat&logo=nvidia)](https://github.com/worv-ai/LatencyNodes)
+[![Extension](https://img.shields.io/badge/ExtVersion-v0.3.0-orange?style=flat&logo=nvidia)](https://github.com/worv-ai/LatencyNodes)
 
 </div>
 
@@ -44,9 +44,9 @@
 
 ## Overview
 
-The Latency-Nodes extension provides a set of `OmniGraph nodes` for Isaac Sim that enable __realistic latency simulation__ in robotic systems. These nodes allow developers to model __communication delays__, __sensor latencies__, and __network-induced delays__ that are common in real-world robotic applications.
+The Latency-Nodes extension provides a comprehensive set of `OmniGraph nodes` for Isaac Sim that enable __realistic latency simulation__ in robotic systems. These nodes allow developers to model __communication delays__, __sensor latencies__, __camera data delays__, and __network-induced delays__ that are common in real-world robotic applications.
 
-Users could apply latency to your robotic systems using the provided nodes with `Latency Controller` and various `Latency Samplers`. Also, they can easily add their own distribution samplers by inheriting from the base class.
+Users can apply latency to robotic systems using the provided nodes with `Latency Controller`, various `Latency Samplers`, and specialized `Camera Nodes` for visual sensor simulation. The extension also supports easy customization by allowing users to add their own distribution samplers by inheriting from the base class.
 
 ![Latency Nodes Preview](/exts/worvai.nodes.latency_nodes/data/preview.png)
 
@@ -54,20 +54,34 @@ Users could apply latency to your robotic systems using the provided nodes with 
 
 - Simulate realistic communication latencies in robotic systems
 - Model variable delays using statistical distributions
+- **Camera latency simulation** with actual image data processing
+- **ROS integration** for camera data publishing with latency
 - Easy integration with existing Isaac Sim workflows
 - Performance-optimized queue-based delay implementation
+- **ForEach loop integration** for efficient batch processing
 
 ## Features
 
-- **Latency Controller**: Implements time-based delay queues for data flow
+### Core Latency System
+- **Enhanced Latency Controller**: Implements time-based delay queues with ForEach loop integration for efficient batch processing
 - **Multiple Distribution Samplers**: Generate variable latencies using different statistical distributions:
   - **Normal Distribution Sampler**: Gaussian distribution for typical scenarios
   - **GEV Distribution Sampler**: Generalized Extreme Value for modeling extreme latency events
   - **Exponential Distribution Sampler**: Exponential distribution for network-like delays
+
+### Camera & Visual Sensor Support
+- **Camera Data Capture**: Captures actual rendered image data from render products
+- **ROS1 Camera Helper with Latency**: Modified ROS1CameraHelper with built-in latency control
+- **ROS1 Publish Rendered Image**: Publishes image data with applied latency to ROS topics
+- **Render Product Latency Controller**: Specialized latency control for render products
+- **Multiple Data Types**: Support for RGB, depth, and other sensor data types
+
+### System Architecture
 - **Extensible Architecture**: Abstract base class (ABC) design for easy addition of new distributions
 - **Configurable Parameters**: Adjustable delay times and distribution parameters
 - **Statistical Tracking**: Built-in statistics (min, max, count, history) for all samplers
 - **Isaac Sim Integration**: Native OmniGraph nodes for seamless workflow integration
+- **ROS Integration**: Native support for ROS1 publishing with latency simulation
 
 ## Version
 
@@ -105,6 +119,7 @@ Users could apply latency to your robotic systems using the provided nodes with 
 
 ## Quick Start
 
+### Basic Setup
 1. **Create a new scene** in Isaac Sim
 2. **Open Action Graph** (`Window > Visual Scripting > Action Graph`)
 3. **Add Latency Nodes**:
@@ -112,9 +127,30 @@ Users could apply latency to your robotic systems using the provided nodes with 
    - Navigate to `Add Node > Latency Nodes`
    - Select your desired node
 
+### Camera Latency Example
+For camera latency simulation:
+1. Add a **Camera Data Capture** node to capture rendered data
+2. Connect a **Normal Distribution Sampler** for variable latency
+3. Use **Latency Controller** to apply delays to the image data
+4. Connect **ROS1 Publish Rendered Image** to publish delayed images
+
+See the [examples directory](./exts/worvai.nodes.latency_nodes/worvai/nodes/latency_nodes/examples/) for complete working examples.
+
 ## Available Nodes
 
-Users could find [Detailed Node Descriptions](/exts/README.md).
+### Core Latency Nodes
+- **Latency Controller**: Enhanced time-based delay queue with ForEach integration
+- **Normal Distribution Sampler**: Gaussian latency generation
+- **GEV Distribution Sampler**: Extreme value latency modeling
+- **Exponential Distribution Sampler**: Network-style delay simulation
+
+### Camera & Visual Sensor Nodes
+- **Camera Data Capture**: Captures actual rendered image data
+- **ROS1 Camera Helper with Latency**: ROS camera publishing with built-in latency
+- **ROS1 Publish Rendered Image**: Image publishing with latency to ROS topics
+- **Render Product Latency Controller**: Specialized render product latency control
+
+For detailed node descriptions and usage examples, see [Extension Documentation](./exts/README.md).
 
 ## Architecture
 
@@ -166,5 +202,5 @@ We would like to express our gratitude to the following:
 ---
 
 **Author:** kickthemoon0817 (kickthemoon0817@gmail.com)  
-**Version:** 0.1.0  
+**Version:** 0.3.0  
 **Isaac Sim Compatibility:** 4.5.0 (2025.02+)
