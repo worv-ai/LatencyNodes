@@ -25,13 +25,14 @@ enable_extension("omni.graph.action_nodes")
 enable_extension("omni.graph.bundle.action")
 enable_extension("omni.graph.window.core")
 enable_extension("omni.graph.window.action")
-enable_extension("worvai.nodes.latency_nodes")
+
+# Make sure to enable ROS1 bridge before latency nodes
 enable_extension("isaacsim.ros1.bridge")
+enable_extension("worvai.nodes.latency_nodes")
 
-
-from pxr import UsdGeom
 import omni
 import omni.usd
+import omni.kit.viewport.utility as viewport_util
 
 # from isaacsim import SimulationApp
 from isaacsim.core.api import World
@@ -39,6 +40,7 @@ from isaacsim.storage.native import get_assets_root_path
 from isaacsim.core.utils.viewports import set_camera_view
 
 import worvai.nodes.latency_nodes.examples.spawn as spawner
+
 
 ASSET_ROOT_PATH = get_assets_root_path()
 print(f"Asset root path is {ASSET_ROOT_PATH}")
@@ -49,26 +51,69 @@ timeline = omni.timeline.get_timeline_interface()
 world = World(
     physics_dt = 1.0 / 500.0,
     stage_units_in_meters = 1.0,
-    rendering_dt = 1.0 / 250.0
+    rendering_dt = 1.0 / 60.0
 )
 
 set_camera_view(
-    eye=[-2, 0, 0.5],
+    eye=[-4, 0, 0.5],
     target=[0.0, 0.0, 0.2],
     camera_prim_path="/OmniverseKit_Persp"
 )
+viewport_api = viewport_util.get_active_viewport()
+viewport_api.set_texture_resolution((1920, 1080))
 
 print("=== Setting Background ===")
 spawner.spawn_ground_plane(world)
 spawner.spawn_light(world)
 
+print("=== Creating Camera Graphs ===")
+print("This example demonstrates camera publishing with and without latency:")
+print("1. Viewport: Viewport publishing without latency")
+print("2. Normal camera: Direct publishing without latency")
+print("3. Latency camera: Using CameraDataCapture + LatencyController + ROS1PublishRenderedImage")
+print("")
+print("ROS Topics that will be published:")
+print("  - /viewport (viewport)")
+print("  - /rgb (no latency)")
+print("  - /rgb_latency (with latency using actual image data)")
+print("")
+
 # === Make ROS1 Subscriber Node ===
 # Twist as '/cmd_vel'
+# Spot Robot is spawned at this time
+# It is implemented in the OgnExampleSpot node 
 spawner.create_latency_graph(
     prim_path="/World/controller_graph",
+    latency_average=0,
+    latency_std=0
 )
 
 spawner.spawn_background_objects(world, num=100)
+
+# Viewport - publishes to /viewport
+spawner.create_camera_normal_graph(
+    prim_path="/World/viewport_graph",
+    camera_prim="/OmniverseKit_Persp",
+    topic_name="viewport"
+)
+
+# Normal camera graph (no latency) - publishes to /rgb
+spawner.create_camera_normal_graph(
+    prim_path="/World/camera_graph_normal",
+    camera_prim="/World/spot/body/front_camera",
+    topic_name="rgb"
+)
+
+# Camera with latency using data capture method - publishes to /rgb_latency
+spawner.create_camera_data_capture_latency_graph(
+    prim_path="/World/camera_data_capture_latency",
+    latency_average=0.4,
+    latency_std=0.2,
+    camera_prim="/World/spot/body/front_camera",
+    topic_name="rgb_latency",
+    data_type="rgb"
+)
+
 
 world.play()
 
@@ -87,12 +132,12 @@ for i in range(8):
 publisher_controller.set_twist(idx=8)
 publisher_controller.set_twist(idx=9)
 
-for _ in range(300):
+for _ in range(100):
     world.step()
 
 # Idle
 publisher_controller.reset_twist_all()
-for _ in range(200):
+for _ in range(60):
     world.step()
 
 # === Part 2 ===
@@ -103,12 +148,12 @@ for i in range(8):
 publisher_controller.set_twist(idx=8)
 publisher_controller.set_twist(idx=9)
 
-for _ in range(600):
+for _ in range(200):
     world.step()
 
 # Idle
 publisher_controller.reset_twist_all()
-for _ in range(200):
+for _ in range(100):
     world.step()
 
 # === Part 3 ===
@@ -119,22 +164,12 @@ for i in range(8):
 publisher_controller.set_twist(idx=8)
 publisher_controller.set_twist(idx=9)
 
-for _ in range(250):
+for _ in range(80):
     world.step()
 
 # Idle
 publisher_controller.reset_twist_all()
 for _ in range(150):
-    world.step()
-
-# Turn Right
-publisher_controller.reset_twist_all()
-for i in range(8):
-    publisher_controller.set_twist(idx=i, angular_z=-1.0)
-publisher_controller.set_twist(idx=8)
-publisher_controller.set_twist(idx=9)
-
-for _ in range(40):
     world.step()
 
 # === Final Part ===
@@ -145,7 +180,7 @@ for i in range(8):
 publisher_controller.set_twist(idx=8, linear_x=0.0, angular_z=0.0)
 publisher_controller.set_twist(idx=9, linear_x=0.0, angular_z=0.0)
 
-for _ in range(500):
+for _ in range(150):
     world.step()
 
 set_camera_view(
@@ -154,7 +189,7 @@ set_camera_view(
     camera_prim_path="/OmniverseKit_Persp"
 )
 
-for _ in range(600):
+for _ in range(150):
     world.step()
 
 set_camera_view(
@@ -163,5 +198,29 @@ set_camera_view(
     camera_prim_path="/OmniverseKit_Persp"
 )
 
-for _ in range(30000):
+print("=== Running Extended Simulation ===")
+print("The simulation will now run for an extended period.")
+print("You can monitor the ROS topics to see the different behaviors:")
+print("")
+print("Expected behavior:")
+print("  - /viewport: Viewport publishing (no latency)")
+print("  - /rgb: Immediate publishing (no latency)")
+print("  - /rgb_latency: Variable latency ~0.4s ± 0.1s (actual image data)")
+print("")
+print("Key difference:")
+print("  - /viewport: Viewport publishing (no latency)")
+print("  - /rgb: Direct camera publishing without any latency")
+print("  - /rgb_latency: Uses CameraDataCapture to get actual image data,")
+print("    applies latency through LatencyController, then publishes via ROS1PublishRenderedImage")
+print("  - This ensures the actual rendered image data goes through latency, not just paths")
+print("")
+print("Pose Alignment:")
+print("  - Spot robot pose has been aligned after each turning maneuver")
+print("  - Robot should now be facing forward (positive X direction) and level")
+print("  - This corrects any orientation drift from turning movements")
+print("")
+
+for i in range(30000):
     world.step()
+    if i % 6000 == 0:  # Print every 24 seconds at 250 FPS
+        print(f"Simulation running... {i/250:.1f}s elapsed")

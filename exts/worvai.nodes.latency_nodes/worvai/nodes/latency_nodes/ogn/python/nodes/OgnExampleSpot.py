@@ -2,9 +2,7 @@ import numpy as np
 from pxr import Gf
 import omni.graph.core as og
 from isaacsim.core.api import World
-import isaacsim.core.utils.rotations as rot_utils
 from isaacsim.sensors.camera import Camera
-from isaacsim.core.prims import SingleArticulation
 from isaacsim.robot.policy.examples.robots.spot import SpotFlatTerrainPolicy
 
 
@@ -25,9 +23,9 @@ class OgnExampleSpotInternalState:
 
 		self.spot_robot = self.spot.robot
 
-		# self.debug_camera = None
-
-		# self._attach_camera()
+		self.debug_camera = None
+		self.front_camera = None
+		self._attach_camera()
 
 	def post_setup(self):
 		self.world.add_physics_callback(
@@ -47,23 +45,42 @@ class OgnExampleSpotInternalState:
 			self.spot.post_reset()
 			self.spot.robot.set_joints_default_state(self.spot.default_pos)
 	
-			# self.debug_camera.initialize()
+			self.debug_camera.initialize()
+			self.front_camera.initialize()
 
-	# def _attach_camera(self):
-	# 	if not self.spot_robot or self.debug_camera:
-	# 		return
+	def _attach_camera(self):
+		if not self.spot_robot or self.debug_camera:
+			return
 		
-	# 	self.debug_camera = Camera(
-	# 		prim_path="/World/spot/body/debug_camera",
-	# 		position=np.array([-5, 0, 2.5 + 0.8]),
-	# 	)
+		self.debug_camera = Camera(
+			prim_path="/World/spot/body/debug_camera",
+			position=np.array([-5, 0, 2.5 + 0.8]),
+			resolution=(1920, 1080)
+		)
+		self.debug_camera.set_focal_length(1.814756) # in Isaac Sim, it is 18.14756
+		self.debug_camera.set_focus_distance(0.0)
 
-	# 	self.debug_camera.prim.GetAttribute('xformOp:orient').Set(
-	# 		Gf.Quatd(
-	# 			0.6123724356957947, 0.3535533905932736,
-	# 			-0.3535533905932738, -0.6123724356957944
-	# 		)
-	# 	)
+		self.debug_camera.prim.GetAttribute('xformOp:orient').Set(
+			Gf.Quatd(
+				0.6123724356957947, 0.3535533905932736,
+				-0.3535533905932738, -0.6123724356957944
+			)
+		)
+
+		self.front_camera = Camera(
+			prim_path="/World/spot/body/front_camera",
+			position=np.array([0.48, 0, 0.8]),
+			resolution=(1920, 1080)
+		)
+		self.front_camera.set_focal_length(1.814756) # in Isaac Sim, it is 18.14756
+		self.front_camera.set_focus_distance(400.0)
+		
+		self.front_camera.prim.GetAttribute('xformOp:orient').Set(
+			Gf.Quatd(
+				0.48633, 0.51481,
+				-0.51326, -0.48479
+			)
+		)
 
 	def release_setup(self):
 		self.initialized = False
@@ -75,7 +92,7 @@ class OgnExampleSpot:
 
 	@staticmethod
 	def initialize(graph_context: og.GraphContext, node: og.Node):
-		spot = SpotFlatTerrainPolicy(
+		SpotFlatTerrainPolicy(
 			prim_path="/World/spot",
 			name="Spot",
 			position=np.array([0, 0, 0.8])

@@ -40,15 +40,30 @@
                 "description": "the trigger output that ends the node",
                 "uiName": "Execute Out"
             },
-            "timestampOut": {
-                "type": "double[]",
-                "description": "buffered timestamps output that can be used to pass a time value through the node",
-                "uiName": "Timestamp Buffer"
+            "loopBody": {
+                "type": "execution",
+                "description": "execution output for each element in the latency buffer (like ForEach)",
+                "uiName": "Loop Body"
             },
-            "dataOut": {
+            "finished": {
+                "type": "execution",
+                "description": "execution output when all buffered elements have been processed",
+                "uiName": "Finished"
+            },
+            "element": {
                 "type": "any",
-                "description": "buffered data output that can be used to pass data through the node",
-                "uiName": "Data Buffer"
+                "description": "current element being output from the latency buffer",
+                "uiName": "Element"
+            },
+            "elementIndex": {
+                "type": "int",
+                "description": "index of the current element being output",
+                "uiName": "Element Index"
+            },
+            "elementTimestamp": {
+                "type": "double",
+                "description": "timestamp of the current element being output",
+                "uiName": "Element Timestamp"
             }
         }
     }

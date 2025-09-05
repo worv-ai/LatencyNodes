@@ -1,0 +1,86 @@
+{
+    "ROS1CameraHelperWithLatency": {
+        "version": 1,
+        "language": "python",
+        "icon": "icons/icon.svg",
+        "uiName": "ROS1 Camera Helper with Latency",
+        "description": [
+            "This node is a modified version of ROS1CameraHelper that includes built-in latency control.",
+            "It captures the actual rendered data and applies latency before publishing to ROS."
+        ],
+        "categoryDefinitions": "config/CategoryDefinition.json",
+        "categories": ["Latency Nodes"],
+        "inputs": {
+            "execIn": {
+                "type": "execution",
+                "description": "the trigger input that starts the node",
+                "uiName": "Execute In"
+            },
+            "renderProductPath": {
+                "type": "token",
+                "description": "path to the render product",
+                "uiName": "Render Product Path"
+            },
+            "type": {
+                "type": "token",
+                "description": "type of sensor data (rgb, depth, depth_pcl, etc.)",
+                "default": "rgb",
+                "uiName": "Type"
+            },
+            "topicName": {
+                "type": "string",
+                "description": "Topic name for sensor data",
+                "default": "rgb",
+                "uiName": "Topic Name"
+            },
+            "frameId": {
+                "type": "string",
+                "description": "FrameId for sensor data",
+                "default": "sim_camera",
+                "uiName": "Frame ID"
+            },
+            "nodeNamespace": {
+                "type": "string",
+                "description": "Namespace of ROS1 Node",
+                "default": "",
+                "uiName": "Node Namespace"
+            },
+            "queueSize": {
+                "type": "uint",
+                "description": "The number of messages to queue up before throwing some away, in case messages are collected faster than they can be sent",
+                "default": 10,
+                "uiName": "Queue Size"
+            },
+            "latency": {
+                "type": "double",
+                "description": "Latency to apply before publishing (in seconds)",
+                "default": 0.0,
+                "uiName": "Latency"
+            },
+            "timestampIn": {
+                "type": "double",
+                "description": "Current simulation timestamp",
+                "uiName": "Timestamp In"
+            },
+            "useSystemTime": {
+                "type": "bool",
+                "description": "If True, system timestamp will be included in messages. If False, simulation timestamp will be included in messages",
+                "default": false,
+                "uiName": "Use System Time"
+            },
+            "enabled": {
+                "type": "bool",
+                "description": "True to enable the helper, False to disable",
+                "default": true,
+                "uiName": "Enabled"
+            }
+        },
+        "outputs": {
+            "execOut": {
+                "type": "execution",
+                "description": "the trigger output that ends the node",
+                "uiName": "Execute Out"
+            }
+        }
+    }
+}
