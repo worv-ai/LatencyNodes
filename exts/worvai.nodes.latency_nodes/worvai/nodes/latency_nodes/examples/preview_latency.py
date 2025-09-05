@@ -32,6 +32,7 @@ enable_extension("worvai.nodes.latency_nodes")
 
 import omni
 import omni.usd
+import omni.kit.viewport.utility as viewport_util
 
 # from isaacsim import SimulationApp
 from isaacsim.core.api import World
@@ -54,10 +55,12 @@ world = World(
 )
 
 set_camera_view(
-    eye=[-2, 0, 0.5],
+    eye=[-4, 0, 0.5],
     target=[0.0, 0.0, 0.2],
     camera_prim_path="/OmniverseKit_Persp"
 )
+viewport_api = viewport_util.get_active_viewport()
+viewport_api.set_texture_resolution((1920, 1080))
 
 print("=== Setting Background ===")
 spawner.spawn_ground_plane(world)
@@ -65,16 +68,20 @@ spawner.spawn_light(world)
 
 print("=== Creating Camera Graphs ===")
 print("This example demonstrates camera publishing with and without latency:")
-print("1. Normal camera: Direct publishing without latency")
-print("2. Latency camera: Using CameraDataCapture + LatencyController + ROS1PublishRenderedImage")
+print("1. Viewport: Viewport publishing without latency")
+print("2. Normal camera: Direct publishing without latency")
+print("3. Latency camera: Using CameraDataCapture + LatencyController + ROS1PublishRenderedImage")
 print("")
 print("ROS Topics that will be published:")
+print("  - /viewport (viewport)")
 print("  - /rgb (no latency)")
 print("  - /rgb_latency (with latency using actual image data)")
 print("")
 
 # === Make ROS1 Subscriber Node ===
 # Twist as '/cmd_vel'
+# Spot Robot is spawned at this time
+# It is implemented in the OgnExampleSpot node 
 spawner.create_latency_graph(
     prim_path="/World/controller_graph",
     latency_average=0,
@@ -83,9 +90,18 @@ spawner.create_latency_graph(
 
 spawner.spawn_background_objects(world, num=100)
 
+# Viewport - publishes to /viewport
+spawner.create_camera_normal_graph(
+    prim_path="/World/viewport_graph",
+    camera_prim="/OmniverseKit_Persp",
+    topic_name="viewport"
+)
+
 # Normal camera graph (no latency) - publishes to /rgb
 spawner.create_camera_normal_graph(
-    prim_path="/World/camera_graph_normal"
+    prim_path="/World/camera_graph_normal",
+    camera_prim="/World/spot/body/front_camera",
+    topic_name="rgb"
 )
 
 # Camera with latency using data capture method - publishes to /rgb_latency
@@ -187,10 +203,12 @@ print("The simulation will now run for an extended period.")
 print("You can monitor the ROS topics to see the different behaviors:")
 print("")
 print("Expected behavior:")
+print("  - /viewport: Viewport publishing (no latency)")
 print("  - /rgb: Immediate publishing (no latency)")
 print("  - /rgb_latency: Variable latency ~0.4s ± 0.1s (actual image data)")
 print("")
 print("Key difference:")
+print("  - /viewport: Viewport publishing (no latency)")
 print("  - /rgb: Direct camera publishing without any latency")
 print("  - /rgb_latency: Uses CameraDataCapture to get actual image data,")
 print("    applies latency through LatencyController, then publishes via ROS1PublishRenderedImage")

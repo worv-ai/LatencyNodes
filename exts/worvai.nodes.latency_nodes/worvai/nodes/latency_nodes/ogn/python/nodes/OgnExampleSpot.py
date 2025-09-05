@@ -2,9 +2,7 @@ import numpy as np
 from pxr import Gf
 import omni.graph.core as og
 from isaacsim.core.api import World
-import isaacsim.core.utils.rotations as rot_utils
 from isaacsim.sensors.camera import Camera
-from isaacsim.core.prims import SingleArticulation
 from isaacsim.robot.policy.examples.robots.spot import SpotFlatTerrainPolicy
 
 
@@ -48,6 +46,7 @@ class OgnExampleSpotInternalState:
 			self.spot.robot.set_joints_default_state(self.spot.default_pos)
 	
 			self.debug_camera.initialize()
+			self.front_camera.initialize()
 
 	def _attach_camera(self):
 		if not self.spot_robot or self.debug_camera:
@@ -56,8 +55,10 @@ class OgnExampleSpotInternalState:
 		self.debug_camera = Camera(
 			prim_path="/World/spot/body/debug_camera",
 			position=np.array([-5, 0, 2.5 + 0.8]),
-			resolution=(1280, 720)
+			resolution=(1920, 1080)
 		)
+		self.debug_camera.set_focal_length(1.814756) # in Isaac Sim, it is 18.14756
+		self.debug_camera.set_focus_distance(0.0)
 
 		self.debug_camera.prim.GetAttribute('xformOp:orient').Set(
 			Gf.Quatd(
@@ -68,9 +69,11 @@ class OgnExampleSpotInternalState:
 
 		self.front_camera = Camera(
 			prim_path="/World/spot/body/front_camera",
-			position=np.array([-0.48, 0, 0.8]),
-			resolution=(1280, 720)
+			position=np.array([0.48, 0, 0.8]),
+			resolution=(1920, 1080)
 		)
+		self.front_camera.set_focal_length(1.814756) # in Isaac Sim, it is 18.14756
+		self.front_camera.set_focus_distance(400.0)
 		
 		self.front_camera.prim.GetAttribute('xformOp:orient').Set(
 			Gf.Quatd(

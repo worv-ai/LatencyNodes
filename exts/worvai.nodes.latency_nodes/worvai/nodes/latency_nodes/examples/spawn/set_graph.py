@@ -120,8 +120,8 @@ def create_camera_latency_graph(prim_path, latency_average, latency_std):
                 ("IsaacTimeReader", "isaacsim.core.nodes.IsaacReadSimulationTime"),
             ],
             keys.SET_VALUES: [
-                ("RenderCamera.inputs:height", 720),
-                ("RenderCamera.inputs:width", 1280),
+                ("RenderCamera.inputs:height", 1080),
+                ("RenderCamera.inputs:width", 1920),
                 ("RenderCamera.inputs:cameraPrim", "/World/spot/body/front_camera"),
 
                 ("NormDistLatency.inputs:_average", latency_average),
@@ -143,7 +143,11 @@ def create_camera_latency_graph(prim_path, latency_average, latency_std):
         }
     )
 
-def create_camera_normal_graph(prim_path):
+def create_camera_normal_graph(
+    prim_path,
+    camera_prim="/World/spot/body/front_camera",
+    topic_name="rgb"
+):
     keys = og.Controller.Keys
 
     graph, nodes, _, _ = og.Controller.edit(
@@ -158,11 +162,11 @@ def create_camera_normal_graph(prim_path):
                 ("ROS1CameraPublisher", "isaacsim.ros1.bridge.ROS1CameraHelper"),
             ],
             keys.SET_VALUES: [
-                ("RenderCamera.inputs:height", 720),
-                ("RenderCamera.inputs:width", 1280),
-                ("RenderCamera.inputs:cameraPrim", "/World/spot/body/front_camera"),
+                ("RenderCamera.inputs:height", 1080),
+                ("RenderCamera.inputs:width", 1920),
+                ("RenderCamera.inputs:cameraPrim", camera_prim),
 
-                ("ROS1CameraPublisher.inputs:topicName", "rgb"),
+                ("ROS1CameraPublisher.inputs:topicName", topic_name),
             ],
             keys.CONNECT: [
                 ("OnPlaybackTick.outputs:tick", "RenderCamera.inputs:execIn"),
