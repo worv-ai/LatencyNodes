@@ -44,7 +44,7 @@
 
 ## Overview
 
-The Latency-Nodes extension provides a comprehensive set of `OmniGraph nodes` for Isaac Sim that enable __realistic latency simulation__ in robotic systems. These nodes allow developers to model __communication delays__, __sensor latencies__, __camera data delays__, and __network-induced delays__ that are common in real-world robotic applications.
+The LatencyNodes extension provides a comprehensive set of `OmniGraph nodes` for Isaac Sim that enable __realistic latency simulation__ in robotic systems. These nodes allow developers to model __communication delays__, __sensor latencies__, __camera data delays__, and __network-induced delays__ that are common in real-world robotic applications.
 
 Users can apply latency to robotic systems using the provided nodes with `Latency Controller`, various `Latency Samplers`, and specialized `Camera Nodes` for visual sensor simulation. The extension also supports easy customization by allowing users to add their own distribution samplers by inheriting from the base class.
 
@@ -101,7 +101,7 @@ Users can apply latency to robotic systems using the provided nodes with `Latenc
 ### Method 1: Extension Manager (Recommended)
 1. Open Isaac Sim
 2. Navigate to `Window > Extensions`
-3. Search for "Latency Nodes"
+3. Search for "LatencyNodes"
 4. Click "Install"
 
 ### Method 2: Manual Installation
@@ -122,9 +122,9 @@ Users can apply latency to robotic systems using the provided nodes with `Latenc
 ### Basic Setup
 1. **Create a new scene** in Isaac Sim
 2. **Open Action Graph** (`Window > Visual Scripting > Action Graph`)
-3. **Add Latency Nodes**:
+3. **Add LatencyNodes**:
    - Right-click in the graph
-   - Navigate to `Add Node > Latency Nodes`
+   - Navigate to `Add Node > LatencyNodes`
    - Select your desired node
 
 ### Camera Latency Example

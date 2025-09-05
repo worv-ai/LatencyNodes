@@ -1,6 +1,6 @@
-# Contributing to Latency-Nodes
+# Contributing to LatencyNodes
 
-Thank you for your interest in contributing to Latency-Nodes! This guide will help you get started with contributing to our Isaac Sim extension for latency simulation.
+Thank you for your interest in contributing to LatencyNodes! This guide will help you get started with contributing to our Isaac Sim extension for latency simulation.
 
 ## Ways to Contribute
 
@@ -29,8 +29,8 @@ Before contributing, ensure you have:
 
 1. **Fork and Clone the Repository**
    ```bash
-   git clone https://github.com/YOUR_USERNAME/Latency-Nodes.git
-   cd Latency-Nodes
+   git clone https://github.com/worv-ai/LatencyNodes.git
+   cd LatencyNodes
    ```
 
 2. **Install Extension in Development Mode**
@@ -44,7 +44,7 @@ Before contributing, ensure you have:
 3. **Verify Installation**
    - Open Isaac Sim
    - Navigate to `Window > Extensions`
-   - Enable "Latency Nodes" extension
+   - Enable "LatencyNodes" extension
    - Test basic functionality
 
 ## Contribution Process
@@ -234,10 +234,10 @@ Need help or have questions?
 ## Recognition
 
 Contributors will be:
-- **Listed in CHANGELOG.md** for their contributions
+- **Listed in [CHANGELOG](../../exts/worvai.nodes.latency_nodes/docs/CHANGELOG.md)** for their contributions
 - **Mentioned in release notes** for significant features
 - **Added to contributors list** in the main README
 
 ---
 
-Thank you for helping make Latency-Nodes better!
+Thank you for helping make LatencyNodes better!

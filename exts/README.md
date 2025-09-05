@@ -1,6 +1,6 @@
-# Latency Nodes Extension
+# LatencyNodes Extension
 
-This document provides detailed technical information on the **Latency Nodes** extension for Isaac Sim, including comprehensive documentation of all nodes, **camera integration**, **installation instructions**, **usage examples**, and **API references**.
+This document provides detailed technical information on the **LatencyNodes** extension for Isaac Sim, including comprehensive documentation of all nodes, **camera integration**, **installation instructions**, **usage examples**, and **API references**.
 
 ---
 
@@ -26,7 +26,7 @@ This document provides detailed technical information on the **Latency Nodes** e
 
 ## Overview
 
-The **Latency Nodes** extension provides a comprehensive set of custom [OmniGraph](https://docs.omniverse.nvidia.com/dev-guide/latest/programmer_ref/omni_graph.html) nodes for **Isaac Sim**, enabling simulation of realistic communication, sensor, and camera delays.
+The **LatencyNodes** extension provides a comprehensive set of custom **OmniGraph** nodes for **Isaac Sim**, enabling simulation of realistic communication, sensor, and camera delays.
 
 With these nodes, developers can:
 - Model **communication latency** in robotic systems
@@ -318,11 +318,11 @@ We welcome community contributions! 🎉
 - Create a feature branch  
 - Submit a Pull Request  
 
-See our [Contribution Guidelines](../../docs/contributions/README.md) for details.
+See our [Contribution Guidelines](../docs/contributions/README.md) for details.
 
 ---
 
 ## License
 
-This project is licensed under the **MIT License**.  
-See the [LICENSE](../../LICENSE) file for details.
+This project is licensed under the **Apache-2.0 License**.  
+See the [LICENSE](../LICENSE) file for details.
